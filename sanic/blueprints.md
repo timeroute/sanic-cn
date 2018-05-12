@@ -1,21 +1,14 @@
-# Blueprints
+# 蓝图
 
-Blueprints are objects that can be used for sub-routing within an application.
-Instead of adding routes to the application instance, blueprints define similar
-methods for adding routes, which are then registered with the application in a
-flexible and pluggable manner.
+蓝图 (Blueprints) 是用在一个应用程序里可用作子路由的对象。作为添加路由到应用程序实例的替代者，蓝图为添加路由定义了相似的方法，即用一种灵活而且可插拔的方法注册到应用程序实例。
 
-Blueprints are especially useful for larger applications, where your
-application logic can be broken down into several groups or areas of
-responsibility.
+蓝图对于大型应用特别有用，当你的应用逻辑能被分解成若干个组或者责任区域。
 
-## My First Blueprint
+## 我的第一个蓝图
 
-The following shows a very simple blueprint that registers a handler-function at
-the root `/` of your application.
+以下展示了一个非常简单的蓝图，即在你的应用的根 url `/` 注册了一个处理程序。
 
-Suppose you save this file as `my_blueprint.py`, which can be imported into your
-main application later.
+假设你保存了这个一会儿能被 import 到你的主应用的文件 `my_blueprint.py`。
 
 ```python
 from sanic.response import json
@@ -29,9 +22,9 @@ async def bp_root(request):
 
 ```
 
-## Registering blueprints
+## 注册蓝图
 
-Blueprints must be registered with the application.
+蓝图必须被应用程序注册。
 
 ```python
 from sanic import Sanic
@@ -43,17 +36,15 @@ app.blueprint(bp)
 app.run(host='0.0.0.0', port=8000, debug=True)
 ```
 
-This will add the blueprint to the application and register any routes defined
-by that blueprint. In this example, the registered routes in the `app.router`
-will look like:
+这将会添加蓝图到应用程序并且注册任意的被蓝图定义的路由。在 `app.router` 里已经注册的路由看起来如下：
 
 ```python
 [Route(handler=<function bp_root at 0x7f908382f9d8>, methods=None, pattern=re.compile('^/$'), parameters=[])]
 ```
 
-## Blueprint groups and nesting
+## 蓝图 组 和 嵌套
 
-Blueprints may also be registered as part of a list or tuple, where the registrar will recursively cycle through any sub-sequences of blueprints and register them accordingly. The `Blueprint.group` method is provided to simplify this process, allowing a 'mock' backend directory structure mimicking what's seen from the front end. Consider this (quite contrived) example:
+蓝图也可能作为一个列表或元组的部分进行注册，其中注册员将递归地遍历蓝图的任何子序列并相应地注册它们。`Blueprint.group` 方法提供简化的程序，允许一个 '模拟' 后端目录结构模仿从前端看到的东西。考虑这个 (颇有认为的) 例子：
 
 ```
 api/
@@ -66,7 +57,7 @@ api/
 app.py
 ```
 
-Initialization of this app's blueprint hierarchy could go as follows:
+应用的蓝图的初始化层次结构如下所示：
 
 ```python
 # api/content/authors.py
@@ -105,7 +96,7 @@ from .info import info
 api = Blueprint.group(content, info, url_prefix='/api')
 ```
 
-And registering these blueprints in `app.py` can now be done like so:
+在 `app.py` 中注册这些蓝图现在可以这样完成：
 
 ```python
 # app.py
@@ -118,18 +109,17 @@ app = Sanic(__name__)
 app.blueprint(api)
 ```
 
-## Using blueprints
+## 使用蓝图
 
-Blueprints have much the same functionality as an application instance.
+蓝图具有与应用程序实例相同的功能。
 
-### WebSocket routes
+### WebSocket 路由
 
-WebSocket handlers can be registered on a blueprint using the `@bp.websocket`
-decorator or `bp.add_websocket_route` method.
+WebSocket 处理程序能够使用 `@bp.websocket` 装饰器或者 `bp.add_websocket_route` 方法在蓝图注册。
 
-### Middleware
+### 中间件
 
-Using blueprints allows you to also register middleware globally.
+使用蓝图允许你可以全局地注册中间件。
 
 ```python
 @bp.middleware
@@ -145,9 +135,9 @@ async def halt_response(request, response):
 	return text('I halted the response')
 ```
 
-### Exceptions
+### 异常
 
-Exceptions can be applied exclusively to blueprints globally.
+异常可以被专门用于全局的蓝图。
 
 ```python
 @bp.exception(NotFound)
@@ -155,9 +145,9 @@ def ignore_404s(request, exception):
 	return text("Yep, I totally found the page: {}".format(request.url))
 ```
 
-### Static files
+### 静态文件
 
-Static files can be served globally, under the blueprint prefix.
+静态文件可以在蓝图前缀下全局提供。
 
 ```python
 
@@ -170,18 +160,16 @@ app.url_for('static', name='bp.uploads', filename='file.txt') == '/bp/web/path/f
 
 ```
 
-## Start and stop
+## 启动和停止
 
-Blueprints can run functions during the start and stop process of the server.
-If running in multiprocessor mode (more than 1 worker), these are triggered
-after the workers fork.
+蓝图可以在服务器启动和停止程序期间运行程序。如果在多进程模式 (多于一个 worker) 运行，他们会在 workers fork 之后被触发。
 
-Available events are:
+有效的事件如下:
 
-- `before_server_start`: Executed before the server begins to accept connections
-- `after_server_start`: Executed after the server begins to accept connections
-- `before_server_stop`: Executed before the server stops accepting connections
-- `after_server_stop`: Executed after the server is stopped and all requests are complete
+- `before_server_start`: 在服务器开始接收连接之前执行
+- `after_server_start`: 在服务器开始接收连接之后执行
+- `before_server_stop`: 在服务器停止接收连接之前执行
+- `after_server_stop`: 在服务器停止并且所有请求已经问你成之后执行
 
 ```python
 bp = Blueprint('my_blueprint')
@@ -196,14 +184,11 @@ async def close_connection(app, loop):
     await database.close()
 ```
 
-## Use-case: API versioning
+## 用例: API 版本
 
-Blueprints can be very useful for API versioning, where one blueprint may point
-at `/v1/<routes>`, and another pointing at `/v2/<routes>`.
+蓝图能很好的用于 API 版本，一个蓝图可以指向 `/v1/<routes>`，另一个指向 `/v2/<routes>`。
 
-When a blueprint is initialised, it can take an optional `url_prefix` argument,
-which will be prepended to all routes defined on the blueprint. This feature
-can be used to implement our API versioning scheme.
+当一个蓝图初始化了，它可以带一个可选的 `url_prefix` 参数，该参数将被添加到所有在蓝图定义的路由中。这个功能可以被用来执行我们的 API 版本方案。
 
 ```python
 # blueprints.py
@@ -222,9 +207,7 @@ async def api_v2_root(request):
     return text('Welcome to version 2 of our documentation')
 ```
 
-When we register our blueprints on the app, the routes `/v1` and `/v2` will now
-point to the individual blueprints, which allows the creation of *sub-sites*
-for each API version.
+当我们在 app 上注册了我们的蓝图，这些路由 `/v1` 和 `/v2` 现在将指向独立的蓝图，允许为每一个 API 版本创建 *子站点*
 
 ```python
 # main.py
@@ -238,10 +221,9 @@ app.blueprint(blueprint_v2, url_prefix='/v2')
 app.run(host='0.0.0.0', port=8000, debug=True)
 ```
 
-## URL Building with `url_for`
+## 用 `url_for` 建立 URL
 
-If you wish to generate a URL for a route inside of a blueprint, remember that the endpoint name
-takes the format `<blueprint_name>.<handler_name>`. For example:
+如果你希望为蓝图里的路由生成 URL，记住端点命名带着 `<blueprint_name>.<handler_name>` 格式。例如：
 
 ```python
 @blueprint_v1.route('/')
@@ -254,5 +236,3 @@ async def root(request):
 async def post_handler(request, post_id):
     return text('Post {} in Blueprint V1'.format(post_id))
 ```
-
-
