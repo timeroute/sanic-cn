@@ -67,10 +67,9 @@ async def halt_response(request, response):
 - `before_server_stop`
 - `after_server_stop`
 
-这些监听器
-These listeners are implemented as decorators on functions which accept the app object as well as the asyncio loop.
+这些监听器会在 app 对象以及 asyncio loop 的程序上作为装饰器来执行。
 
-For example:
+例如：
 
 ```python
 @app.listener('before_server_start')
@@ -90,9 +89,7 @@ async def close_db(app, loop):
     await app.db.close()
 ```
 
-It's also possible to register a listener using the `register_listener` method.
-This may be useful if you define your listeners in another module besides
-the one you instantiate your app in.
+也有可能使用 `register_listener` 方法来注册监听器。如果你定义你的监听器在一个当你已经实例化你的 app 后的别的模块上，这方法就会有用。
 
 ```python
 app = Sanic()
@@ -104,8 +101,7 @@ app.register_listener(setup_db, 'before_server_start')
 
 ```
 
-If you want to schedule a background task to run after the loop has started,
-Sanic provides the `add_task` method to easily do so.
+如果你想要在 loop 已经启动后安排一个后台任务来执行，Sanic 提供了 `add_task` 方法来简单地实现。
 
 ```python
 async def notify_server_started_after_five_seconds():
@@ -115,7 +111,7 @@ async def notify_server_started_after_five_seconds():
 app.add_task(notify_server_started_after_five_seconds())
 ```
 
-Sanic will attempt to automatically inject the app, passing it as an argument to the task:
+Sanic 会尝试自动注入 app，作为参数传递给任务：
 
 ```python
 async def notify_server_started_after_five_seconds(app):
@@ -125,7 +121,7 @@ async def notify_server_started_after_five_seconds(app):
 app.add_task(notify_server_started_after_five_seconds)
 ```
 
-Or you can pass the app explicitly for the same effect:
+或者同样效果地你可以明确地传递 app
 
 ```python
 async def notify_server_started_after_five_seconds(app):
@@ -133,4 +129,4 @@ async def notify_server_started_after_five_seconds(app):
     print(app.name)
 
 app.add_task(notify_server_started_after_five_seconds(app))
-`
+```
