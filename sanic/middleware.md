@@ -1,21 +1,17 @@
-# Middleware And Listeners
+# 中间件 和 监听器
 
-Middleware are functions which are executed before or after requests to the
-server. They can be used to modify the *request to* or *response from*
-user-defined handler functions.
+中间件是在请求到服务器前或后执行的程序。它们能用来修改请求到用户定义的处理程序或者从用户定义的处理程序中响应。
 
-Additionally, Sanic provides listeners which allow you to run code at various points of your application's lifecycle.
+另外，Sanic 提供的监听器允许你在应用程序生命周期的多个端运行代码
 
-## Middleware
+## 中间件
 
-There are two types of middleware: request and response. Both are declared
-using the `@app.middleware` decorator, with the decorator's parameter being a
-string representing its type: `'request'` or `'response'`.
+有两种中间件：请求和响应。两者都使用 `@app.middleware` 装饰器声明，装饰器的参数是一个表示类型的字符串：`'request'` 或 `'response'`.
 
-* Request middleware receives only the `request` as argument.
-* Response middleware receives both the `request` and `response`.
+* 请求中间件接收仅作为 `request` 的参数。
+* 响应中间件接收同时可以是 `request` 和 `response` 的参数。
 
-The simplest middleware doesn't modify the request or response at all:
+最简单的中间件根本不会修改请求和响应：
 
 ```python
 @app.middleware('request')
@@ -27,11 +23,9 @@ async def print_on_response(request, response):
 	print("I print when a response is returned by the server")
 ```
 
-## Modifying the request or response
+## 修改请求或响应
 
-Middleware can modify the request or response parameter it is given, *as long
-as it does not return it*. The following example shows a practical use-case for
-this.
+中间件可以修改给定的请求或响应的参数，*只要它们不返回*。下面的例子显示了这个实际的用例：
 
 ```python
 app = Sanic(__name__)
@@ -47,18 +41,12 @@ async def prevent_xss(request, response):
 app.run(host="0.0.0.0", port=8000)
 ```
 
-The above code will apply the two middleware in order. First, the middleware
-**custom_banner** will change the HTTP response header *Server* to
-*Fake-Server*, and the second middleware **prevent_xss** will add the HTTP
-header for preventing Cross-Site-Scripting (XSS) attacks. These two functions
-are invoked *after* a user function returns a response.
+以上代码会按顺序接收两个中间件。第一个中间件 **custom_banner** 会修改 HTTP 响应头 *Server* 为 *Fake-Server*，第二个中间件 **prevent_xss** 会添加 HTTP
+头以避免跨站脚本 (XSS) 攻击。这两个程序在用户程序返回响应后调用。
 
-## Responding early
+## 提前响应
 
-If middleware returns a `HTTPResponse` object, the request will stop processing
-and the response will be returned. If this occurs to a request before the
-relevant user route handler is reached, the handler will never be called.
-Returning a response will also prevent any further middleware from running.
+如果中间件返回一个 `HTTPResponse` 对象，该请求会停止处理并且响应会被返回。如果这发生在一个到达相应用户路由处理程序前的请求，该处理程序永远不会被调用。返回响应也会阻止任何进一步的中间件运行。
 
 ```python
 @app.middleware('request')
@@ -70,16 +58,17 @@ async def halt_response(request, response):
 	return text('I halted the response')
 ```
 
-## Listeners
+## 监听器
 
-If you want to execute startup/teardown code as your server starts or closes, you can use the following listeners:
+如果你想执行 startup/teardown 代码作为你服务应用的启动或关闭，你可以使用以下监听器：
 
 - `before_server_start`
 - `after_server_start`
 - `before_server_stop`
 - `after_server_stop`
 
-These listeners are implemented as decorators on functions which accept the app object as well as the asyncio loop. 
+这些监听器
+These listeners are implemented as decorators on functions which accept the app object as well as the asyncio loop.
 
 For example:
 
@@ -101,16 +90,16 @@ async def close_db(app, loop):
     await app.db.close()
 ```
 
-It's also possible to register a listener using the `register_listener` method. 
+It's also possible to register a listener using the `register_listener` method.
 This may be useful if you define your listeners in another module besides
 the one you instantiate your app in.
 
 ```python
 app = Sanic()
-    
+
 async def setup_db(app, loop):
     app.db = await db_setup()
-    
+
 app.register_listener(setup_db, 'before_server_start')
 
 ```
