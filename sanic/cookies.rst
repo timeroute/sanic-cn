@@ -1,22 +1,19 @@
 Cookies
 =======
 
-Cookies are pieces of data which persist inside a user's browser. Sanic can
-both read and write cookies, which are stored as key-value pairs.
+Cookies 是用户浏览器内部的一些数据。Sanic 可以读取和写入存储为键值对的 cookie 。
 
-.. warning::
+.. 注意::
 
-    Cookies can be freely altered by the client. Therefore you cannot just store
-    data such as login information in cookies as-is, as they can be freely altered
-    by the client. To ensure data you store in cookies is not forged or tampered
-    with by the client, use something like `itsdangerous`_ to cryptographically
-    sign the data.
+    Cookies 能够被客户端随意修改。因此你不能只按原样在 cookies 存储登录信息，因为它们可以由
+    客户自由更改。确保你存在 cookies 的数据不会被客户端伪造或篡改，使用类似 `itsdangerous`_
+    来加密签名数据。
 
 
-Reading cookies
+读 cookies
 ---------------
 
-A user's cookies can be accessed via the ``Request`` object's ``cookies`` dictionary.
+一个用户的 cookies 可以通过 ``Request`` 对象的 ``cookies`` 字典访问。
 
 .. code-block:: python
 
@@ -27,10 +24,10 @@ A user's cookies can be accessed via the ``Request`` object's ``cookies`` dictio
         test_cookie = request.cookies.get('test')
         return text("Test cookie set to: {}".format(test_cookie))
 
-Writing cookies
+写 cookies
 ---------------
 
-When returning a response, cookies can be set on the ``Response`` object.
+当返回一个响应，cookies 可以在 ``Response`` 对象上设置。
 
 .. code-block:: python
 
@@ -44,10 +41,10 @@ When returning a response, cookies can be set on the ``Response`` object.
         response.cookies['test']['httponly'] = True
         return response
 
-Deleting cookies
+删除 cookies
 ----------------
 
-Cookies can be removed semantically or explicitly.
+Cookies 可以语义地或明确地删除。
 
 .. code-block:: python
 
@@ -72,16 +69,14 @@ Cookies can be removed semantically or explicitly.
 
         return response
 
-Response cookies can be set like dictionary values and have the following
-parameters available:
+响应 cookies 可被设置成字典值并且有一下有效参数:
 
-- ``expires`` (datetime): The time for the cookie to expire on the client's browser.
-- ``path`` (string): The subset of URLs to which this cookie applies.  Defaults to /.
-- ``comment`` (string): A comment (metadata).
-- ``domain`` (string): Specifies the domain for which the cookie is valid. An
-  explicitly specified domain must always start with a dot.
-- ``max-age`` (number): Number of seconds the cookie should live for.
-- ``secure`` (boolean): Specifies whether the cookie will only be sent via HTTPS.
-- ``httponly`` (boolean): Specifies whether the cookie cannot be read by Javascript.
+- ``expires`` (datetime): cookies 在客户端的浏览器上的过期时间。
+- ``path`` (string): cookie 使用的子 URL。默认为 /.
+- ``comment`` (string): 注释 (元数据).
+- ``domain`` (string): cookie 有效的指定域名。一个明确的指定域名必须总是有 . 开始。
+- ``max-age`` (number): cookie 可以存活的最大秒数。
+- ``secure`` (boolean): 指定 cookie 是否只能通过 HTTPS 发送。
+- ``httponly`` (boolean): 指定 cookie 是否不能被 Javascript 读取。
 
 .. _itsdangerous: https://pythonhosted.org/itsdangerous/
