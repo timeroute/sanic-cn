@@ -1,8 +1,8 @@
-# Streaming
+# 流
 
-## Request Streaming
+## 请求流
 
-Sanic allows you to get request data by stream, as below. When the request ends, `request.stream.get()` returns `None`. Only post, put and patch decorator have stream argument.
+Sanic 允许你通过流来获取请求，如下。当请求结束，`request.stream.get()` 返回 `None`。只有 post、 put 和 patch 装饰器才能有流参数。
 
 ```python
 from sanic import Sanic
@@ -72,9 +72,9 @@ if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8000)
 ```
 
-## Response Streaming
+## 响应流
 
-Sanic allows you to stream content to the client with the `stream` method. This method accepts a coroutine callback which is passed a `StreamingHTTPResponse` object that is written to. A simple example is like follows:
+Sanic 允许您使用流方法将内容传输到客户端。此方法接受通过写入的 `StreamingHTTPResponse` 对象传递的协程回调。一个简单的例子如下：
 
 ```python
 from sanic import Sanic
@@ -91,7 +91,7 @@ async def test(request):
     return stream(sample_streaming_fn, content_type='text/csv')
 ```
 
-This is useful in situations where you want to stream content to the client that originates in an external service, like a database. For example, you can stream database records to the client with the asynchronous cursor that `asyncpg` provides:
+这会在当你想要用流的方法将内容发送到来自外部服务的客户端的情况下变得有用，就像数据库。例如，你可以用流的方法将 `asyncpg` 提供的异步游标把数据记录发送到客户端：
 
 ```python
 @app.route("/")
