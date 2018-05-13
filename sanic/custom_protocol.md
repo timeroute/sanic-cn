@@ -1,6 +1,6 @@
 # 自定义协议
 
-*注意：这是高级用户，大部分读者用不到这功能。*
+*注意：这是高级用法，大部分读者用不到这功能。*
 
 你可以通过指定一个继承于 [asyncio.protocol](https://docs.python.org/3/library/asyncio-protocol.html#protocol-classes) 的自定义的协议来修改 Sanic 协议的动作。该协议就可以作为关键字参数 `protocol` 被传递到 `sanic.run` 方法。
 
