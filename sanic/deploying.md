@@ -1,74 +1,57 @@
-# Deploying
+# 部署
 
-Deploying Sanic is made simple by the inbuilt webserver. After defining an
-instance of `sanic.Sanic`, we can call the `run` method with the following
-keyword arguments:
+部署 Sanic 由内建的 web 服务器简化。在定义一个 `sanic.Sanic` 实例后，我们可以使用如下关键字参数调用 `run` 方法：
 
-- `host` *(default `"127.0.0.1"`)*: Address to host the server on.
-- `port` *(default `8000`)*: Port to host the server on.
-- `debug` *(default `False`)*: Enables debug output (slows server).
-- `ssl` *(default `None`)*: `SSLContext` for SSL encryption of worker(s).
-- `sock` *(default `None`)*: Socket for the server to accept connections from.
-- `workers` *(default `1`)*: Number of worker processes to spawn.
-- `loop` *(default `None`)*: An `asyncio`-compatible event loop. If none is
-                             specified, Sanic creates its own event loop.
-- `protocol` *(default `HttpProtocol`)*: Subclass
-  of
-  [asyncio.protocol](https://docs.python.org/3/library/asyncio-protocol.html#protocol-classes).
+- `host` *(默认 `"127.0.0.1"`)*: 主机服务器地址。
+- `port` *(默认 `8000`)*: 主机服务器端口。
+- `debug` *(默认 `False`)*: 启动调试输出 (减缓服务器速度).
+- `ssl` *(默认 `None`)*: 为工作进程的 SSL 加密的 `SSLContext`。
+- `sock` *(默认 `None`)*: 服务器接受连接的套接字。
+- `workers` *(默认 `1`)*: 产生的工作进程的数量。
+- `loop` *(默认 `None`)*: 一个兼容 `asyncio` 的事件循环。如果 none 被指定，Sanic 会建立自己的事件循环。
+- `protocol` *(默认 `HttpProtocol`)*: [asyncio.protocol](https://docs.python.org/3/library/asyncio-protocol.html#protocol-classes) 的继承。
 
-## Workers
+## 工作进程
 
-By default, Sanic listens in the main process using only one CPU core. To crank
-up the juice, just specify the number of workers in the `run` arguments.
+默认情况下，Sanic 使用一个 CPU 核心在主程序中监听。为了加速，只需在 `run` 参数里指定 workers 工作进程的数量。
 
 ```python
 app.run(host='0.0.0.0', port=1337, workers=4)
 ```
 
-Sanic will automatically spin up multiple processes and route traffic between
-them. We recommend as many workers as you have available cores.
+Sanic 会自动启动多个进程并且在它们之间路由流量。我们建议尽可能多得根据你有的 CPU 核心数量。
 
-## Running via command
+## 在终端运行
 
-If you like using command line arguments, you can launch a Sanic server by
-executing the module. For example, if you initialized Sanic as `app` in a file
-named `server.py`, you could run the server like so:
+如果你喜欢使用命令行参数，你可以通过执行这个模块启动一个 Sanic 服务。例如，如果你在一个名叫 `server.py` 文件里初始化了一个叫做 `app` 的 Sanic 应用，你可以运行服务如下：
 
 `python -m sanic server.app --host=0.0.0.0 --port=1337 --workers=4`
 
-With this way of running sanic, it is not necessary to invoke `app.run` in your
-Python file. If you do, make sure you wrap it so that it only executes when
-directly run by the interpreter.
+这种运行 sanic 的方式，不需要在你的 Python 文件中调用 `app.run`。如果你这样做了，确保包装了它以便它只在解释器运行时执行。
 
 ```python
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=1337, workers=4)
 ```
 
-## Running via Gunicorn
+## 在 Gunicorn 运行
 
-[Gunicorn](http://gunicorn.org/) ‘Green Unicorn’ is a WSGI HTTP Server for UNIX.
-It’s a pre-fork worker model ported from Ruby’s Unicorn project.
+[Gunicorn](http://gunicorn.org/) ‘Green Unicorn’ 是一个 UNIX 下的 WSGI HTTP 服务器。这是一个从 Ruby 的 Unicorn 项目移植过来的预分叉工作者模型。
 
-In order to run Sanic application with Gunicorn, you need to use the special `sanic.worker.GunicornWorker`
-for Gunicorn `worker-class` argument:
+为了用 Gunicorn 运行 Sanic 应用程序，你需要为 Gunicorn `worler-class` 参数使用特定的 `sanic.worker.GunicornWorker`：
 
 ```
 gunicorn myapp:app --bind 0.0.0.0:1337 --worker-class sanic.worker.GunicornWorker
 ```
 
-If your application suffers from memory leaks, you can configure Gunicorn to gracefully restart a worker
-after it has processed a given number of requests. This can be a convenient way to help limit the effects
-of the memory leak.
+如果你的应用程序遭受内存泄漏，你可以将 Gunicorn 配置为在处理完指定数量的请求后正常重启工作程序。这是一种便利的方法来帮助限制内存泄漏的影响。
 
-See the [Gunicorn Docs](http://docs.gunicorn.org/en/latest/settings.html#max-requests) for more information.
+查看 [Gunicorn Docs](http://docs.gunicorn.org/en/latest/settings.html#max-requests) 获取更多信息。
 
-## Asynchronous support
-This is suitable if you *need* to share the sanic process with other applications, in particular the `loop`.
-However be advised that this method does not support using multiple processes, and is not the preferred way
-to run the app in general.
+## 异步支持
+如果你 *需要* 分享 sanic 进程给其他应用程序，特别是 `loop`，这非常合适。但是请注意，此方法不支持使用多个进程，并且一般来说这不是最佳运行应用的方式。
 
-Here is an incomplete example (please see `run_async.py` in examples for something more practical):
+这是一个不完整的例子 (请参考示例中的 `run_async.py` 以获取更实用的内容)：
 
 ```python
 server = app.create_server(host="0.0.0.0", port=8000)

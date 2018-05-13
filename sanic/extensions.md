@@ -1,33 +1,31 @@
-# Extensions
+# 扩展
 
-A list of Sanic extensions created by the community.
-- [Sanic-Plugins-Framework](https://github.com/ashleysommer/sanicpluginsframework): Library for easily creating and using Sanic plugins.
-- [Sessions](https://github.com/subyraman/sanic_session): Support for sessions.
-  Allows using redis, memcache or an in memory store.
-- [CORS](https://github.com/ashleysommer/sanic-cors): A port of flask-cors.
-- [Compress](https://github.com/subyraman/sanic_compress): Allows you to easily gzip Sanic responses. A port of Flask-Compress.
-- [Jinja2](https://github.com/lixxu/sanic-jinja2): Support for Jinja2 template.
-- [Sanic JWT](https://github.com/ahopkins/sanic-jwt): Authentication, JWT, and permission scoping for Sanic.
-- [OpenAPI/Swagger](https://github.com/channelcat/sanic-openapi): OpenAPI support, plus a Swagger UI.
-- [Pagination](https://github.com/lixxu/python-paginate): Simple pagination support.
-- [Motor](https://github.com/lixxu/sanic-motor): Simple motor wrapper.
-- [Sanic CRUD](https://github.com/Typhon66/sanic_crud): CRUD REST API generation with peewee models.
-- [UserAgent](https://github.com/lixxu/sanic-useragent): Add `user_agent` to request
-- [Limiter](https://github.com/bohea/sanic-limiter): Rate limiting for sanic.
-- [Sanic EnvConfig](https://github.com/jamesstidard/sanic-envconfig): Pull environment variables into your sanic config.
-- [Babel](https://github.com/lixxu/sanic-babel): Adds i18n/l10n support to Sanic applications with the help of the
-`Babel` library
-- [Dispatch](https://github.com/ashleysommer/sanic-dispatcher): A dispatcher inspired by `DispatcherMiddleware` in werkzeug. Can act as a Sanic-to-WSGI adapter.
-- [Sanic-OAuth](https://github.com/Sniedes722/Sanic-OAuth): OAuth Library for connecting to & creating your own token providers.
-- [sanic-oauth](https://gitlab.com/SirEdvin/sanic-oauth): OAuth Library with many provider and OAuth1/OAuth2 support.
-- [Sanic-nginx-docker-example](https://github.com/itielshwartz/sanic-nginx-docker-example): Simple and easy to use example of Sanic behined nginx using docker-compose.
-- [sanic-graphql](https://github.com/graphql-python/sanic-graphql): GraphQL integration with Sanic
-- [sanic-prometheus](https://github.com/dkruchinin/sanic-prometheus): Prometheus metrics for Sanic
-- [Sanic-RestPlus](https://github.com/ashleysommer/sanic-restplus): A port of Flask-RestPlus for Sanic. Full-featured REST API with SwaggerUI generation.
-- [sanic-transmute](https://github.com/yunstanford/sanic-transmute): A Sanic extension that generates APIs from python function and classes, and also generates Swagger UI/documentation automatically.
-- [pytest-sanic](https://github.com/yunstanford/pytest-sanic): A pytest plugin for Sanic. It helps you to test your code asynchronously.
-- [jinja2-sanic](https://github.com/yunstanford/jinja2-sanic): a jinja2 template renderer for Sanic.([Documentation](http://jinja2-sanic.readthedocs.io/en/latest/))
-- [GINO](https://github.com/fantix/gino): An asyncio ORM on top of SQLAlchemy core, delivered with a Sanic extension. ([Documentation](https://python-gino.readthedocs.io/))
-- [Sanic-Auth](https://github.com/pyx/sanic-auth): A minimal backend agnostic session-based user authentication mechanism for Sanic.
-- [Sanic-CookieSession](https://github.com/pyx/sanic-cookiesession): A client-side only, cookie-based session, similar to the built-in session in Flask.
-- [Sanic-WTF](https://github.com/pyx/sanic-wtf): Sanic-WTF makes using WTForms with Sanic and CSRF (Cross-Site Request Forgery) protection a little bit easier.
+社区创建的 Sanic 扩展列表。
+- [Sanic-Plugins-Framework](https://github.com/ashleysommer/sanicpluginsframework): 为轻松创建和使用 Sanic 插件的库。
+- [Sessions](https://github.com/subyraman/sanic_session): 支持 Session。允许使用 redis, memcache 或者内存存数。
+- [CORS](https://github.com/ashleysommer/sanic-cors): 一个 flask-cors 移植项目。
+- [Compress](https://github.com/subyraman/sanic_compress): 逊于你轻松地 gzip Sanic 响应。一个 Flask-Compress 的移植项目。
+- [Jinja2](https://github.com/lixxu/sanic-jinja2): 支持 Jinja2 模板.
+- [Sanic JWT](https://github.com/ahopkins/sanic-jwt): 为 Sanic 提供认证, JWT 和 权限作用域。
+- [OpenAPI/Swagger](https://github.com/channelcat/sanic-openapi): OpenAPI 支持，加了 Swagger UI。
+- [Pagination](https://github.com/lixxu/python-paginate): 简单的分页支持。
+- [Motor](https://github.com/lixxu/sanic-motor): 简单的 motor 包装。
+- [Sanic CRUD](https://github.com/Typhon66/sanic_crud): 使用 peewee 模型的 CRUD REST API 生成器。
+- [UserAgent](https://github.com/lixxu/sanic-useragent): 添加 `user_agent` 到请求。
+- [Limiter](https://github.com/bohea/sanic-limiter): sanic 的速率限制。
+- [Sanic EnvConfig](https://github.com/jamesstidard/sanic-envconfig): 拉取环境变量到你的 sanic 配置。
+- [Babel](https://github.com/lixxu/sanic-babel): 在 `Babel` 库的帮助下添加 i18n/l10n 支持到 Sanic 应用程序
+- [Dispatch](https://github.com/ashleysommer/sanic-dispatcher): 一个在 werkzeug 受 `DispatcherMiddleware` 启发的调度。可以作为一个 Sanic-to-WSGI 适配器使用。
+- [Sanic-OAuth](https://github.com/Sniedes722/Sanic-OAuth): 为连接或者创建你自己的 token 提供商的 OAuth 库
+- [sanic-oauth](https://gitlab.com/SirEdvin/sanic-oauth): 拥有许多提供商的 OAuth 库并且支持 OAuth1/OAuth2。
+- [Sanic-nginx-docker-example](https://github.com/itielshwartz/sanic-nginx-docker-example): 简单轻松地在 docker-compose 的 nginx 后使用 Sanic 示例。
+- [sanic-graphql](https://github.com/graphql-python/sanic-graphql): GraphQL 与 Sanic 的集成。
+- [sanic-prometheus](https://github.com/dkruchinin/sanic-prometheus): Sanic 的 Prometheus 指标。
+- [Sanic-RestPlus](https://github.com/ashleysommer/sanic-restplus): 为 Sanic 移植的 Flask-RestPlus。带 SwaggerUI 生成器的全功能 REST API。
+- [sanic-transmute](https://github.com/yunstanford/sanic-transmute): 一个 Sanic 扩展，从 python 的函数和类中生成 APIs，而且还自动生成 Swagger UI/文档。
+- [pytest-sanic](https://github.com/yunstanford/pytest-sanic): Sanic 的 pytest 插件。它帮助你异步地测试你的代码。
+- [jinja2-sanic](https://github.com/yunstanford/jinja2-sanic): Sanic 的 jinja2 模板渲染库。([Documentation](http://jinja2-sanic.readthedocs.io/en/latest/))
+- [GINO](https://github.com/fantix/gino): 一个在 SQLAlchemy 核心上的异步 ORM，随 Sanic 扩展一起交付。 ([Documentation](https://python-gino.readthedocs.io/))
+- [Sanic-Auth](https://github.com/pyx/sanic-auth): Sanic 的最小后端不可知的基于会话的用户认证机制。
+- [Sanic-CookieSession](https://github.com/pyx/sanic-cookiesession): 仅基于cookie的客户端会话，类似于Flask中的内置会话。
+- [Sanic-WTF](https://github.com/pyx/sanic-wtf): Sanic-WTF 使得使用带有 Sanic 和 CSRF (Cross-Site Request Forgery) 的 WTForms 更容易一些。
