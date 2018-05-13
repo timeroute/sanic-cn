@@ -1,36 +1,25 @@
-# Custom Protocols
+# 自定义协议
 
-*Note: this is advanced usage, and most readers will not need such functionality.*
+*注意：这是高级用户，大部分读者用不到这功能。*
 
-You can change the behavior of Sanic's protocol by specifying a custom
-protocol, which should be a subclass
-of
-[asyncio.protocol](https://docs.python.org/3/library/asyncio-protocol.html#protocol-classes).
-This protocol can then be passed as the keyword argument `protocol` to the `sanic.run` method.
+你可以通过指定一个继承于 [asyncio.protocol](https://docs.python.org/3/library/asyncio-protocol.html#protocol-classes) 的自定义的协议来修改 Sanic 协议的动作。该协议就可以作为关键字参数 `protocol` 被传递到 `sanic.run` 方法。
 
-The constructor of the custom protocol class receives the following keyword
-arguments from Sanic.
+自定义协议类的构造函数从 Sanic 接收一下关键字参数。
 
-- `loop`: an `asyncio`-compatible event loop.
-- `connections`: a `set` to store protocol objects. When Sanic receives
-  `SIGINT` or `SIGTERM`, it executes `protocol.close_if_idle` for all protocol
-  objects stored in this set.
-- `signal`: a `sanic.server.Signal` object with the `stopped` attribute. When
-  Sanic receives `SIGINT` or `SIGTERM`, `signal.stopped` is assigned `True`.
-- `request_handler`: a coroutine that takes a `sanic.request.Request` object
-  and a `response` callback as arguments.
-- `error_handler`: a `sanic.exceptions.Handler` which is called when exceptions
-  are raised.
-- `request_timeout`: the number of seconds before a request times out.
-- `request_max_size`: an integer specifying the maximum size of a request, in bytes.
+- `loop`: 一个兼容 `asyncio` 的事件循环。
+- `connections`: 一个保存协议对象的 `set`。当 Sanic 接收到
+  `SIGINT` 或 `SIGTERM`，会为所有保存在集合里协议执行 `protocol.close_if_idle`。
+- `signal`: 一个带有 `stopped` 属性的 `sanic.server.Signal` 对象。当 Sanic 接收到 `SIGINT` 或 `SIGTERM`，`signal.stopped` 被置为 `True`。
+- `request_handler`: 一个带着 `sanic.request.Request` 对象和 `response` 回调作为参数的协程。
+- `error_handler`: 一个当异常抛出时回调的 `sanic.exceptions.Handler`。
+- `request_timeout`: 请求超时秒数。
+- `request_max_size`: 一个请求指定的最大数值，用 bytes。
 
-## Example
+## 例子
 
-An error occurs in the default protocol if a handler function does not return
-an `HTTPResponse` object.
+如果一个处理程序不返回 `HTTPResponse` 对象就会在默认协议引发错误。
 
-By overriding the `write_response` protocol method, if a handler returns a
-string it will be converted to an `HTTPResponse object`.
+通过复写 `write_response` 协议方法，当一个处理程序返回一个字符串它将转换成一个 `HTTPResponse` 对象。
 
 ```python
 from sanic import Sanic
