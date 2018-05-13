@@ -1,24 +1,14 @@
-# Class-Based Views
+# 基于类的视图
 
-Class-based views are simply classes which implement response behaviour to
-requests. They provide a way to compartmentalise handling of different HTTP
-request types at the same endpoint. Rather than defining and decorating three
-different handler functions, one for each of an endpoint's supported request
-type, the endpoint can be assigned a class-based view.
+基于类的视图只是实现对请求的响应行为的类。它们提供了在同一个端点上划分不同HTTP请求类型的处理方式。相当与定义和装饰了三种不同的处理程序，每端支持一种请求类型，端点可以被分配一个基于类的视图。
 
-## Defining views
+## 定义视图
 
-A class-based view should subclass `HTTPMethodView`. You can then implement
-class methods for every HTTP request type you want to support. If a request is
-received that has no defined method, a `405: Method not allowed` response will
-be generated.
+一个基于类的视图应该继承 `HTTPMethodView`。你可以为每个你想要支持的 HTTP 请求类型执行类方法。如果请求已经接收但是没有定义方法，一个 `405: Method not allowed` 响应就会生成。
 
-To register a class-based view on an endpoint, the `app.add_route` method is
-used. The first argument should be the defined class with the method `as_view`
-invoked, and the second should be the URL endpoint.
+要注册一个基于类的视图到端，`app.add_route` 方法是有用的。第一个参数应该是被定义带 `as_view` 方法的类，第二个参数应该是 URL 端。
 
-The available methods are `get`, `post`, `put`, `patch`, and `delete`. A class
-using all these methods would look like the following.
+有效的方法有 `get`, `post`, `put`, `patch` 和 `delete`。一个使用所有方法的类看起来如下。
 
 ```python
 from sanic import Sanic
@@ -48,7 +38,7 @@ app.add_route(SimpleView.as_view(), '/')
 
 ```
 
-You can also use `async` syntax.
+你也可以使用 `async` 语法。
 
 ```python
 from sanic import Sanic
@@ -66,10 +56,9 @@ app.add_route(SimpleAsyncView.as_view(), '/')
 
 ```
 
-## URL parameters
+## URL 参数
 
-If you need any URL parameters, as discussed in the routing guide, include them
-in the method definition.
+如果需要路由指南中讨论的任何URL参数，请将其包括在方法定义中。
 
 ```python
 class NameView(HTTPMethodView):
@@ -80,10 +69,9 @@ class NameView(HTTPMethodView):
 app.add_route(NameView.as_view(), '/<name>')
 ```
 
-## Decorators
+## 装饰器
 
-If you want to add any decorators to the class, you can set the `decorators`
-class variable. These will be applied to the class when `as_view` is called.
+如果你想要添加任何装饰器到类，你可以设置 `decorators` 类的变量。这些会在 `as_view` 被调用时应用到类。
 
 ```python
 class ViewWithDecorator(HTTPMethodView):
@@ -98,7 +86,7 @@ class ViewWithDecorator(HTTPMethodView):
 app.add_route(ViewWithDecorator.as_view(), '/url')
 ```
 
-But if you just want to decorate some functions and not all functions, you can do as follows:
+但是如果你只想装饰一些函数而不是所有，你可以操作如下：
 
 ```python
 class ViewWithSomeDecorator(HTTPMethodView):
@@ -112,10 +100,9 @@ class ViewWithSomeDecorator(HTTPMethodView):
         return text("Hello I don't have any decorators")
 ```
 
-## URL Building
+## URL 构建
 
-If you wish to build a URL for an HTTPMethodView, remember that the class name will be the endpoint
-that you will pass into `url_for`. For example:
+如果你希望为 HTTPMethodView 构建 URL，记住类名将成为你传入 `url_for` 的端点。例如：
 
 ```python
 @app.route('/')
@@ -133,17 +120,11 @@ app.add_route(SpecialClassView.as_view(), '/special_class_view')
 ```
 
 
-## Using CompositionView
+## 使用 CompositionView
 
-As an alternative to the `HTTPMethodView`, you can use `CompositionView` to
-move handler functions outside of the view class.
+作为 `HTTPMethodView` 的替代方案，你可用 `CompositionView` 在视图类之外移动处理函数。
 
-Handler functions for each supported HTTP method are defined elsewhere in the
-source, and then added to the view using the `CompositionView.add` method. The
-first parameter is a list of HTTP methods to handle (e.g. `['GET', 'POST']`),
-and the second is the handler function. The following example shows
-`CompositionView` usage with both an external handler function and an inline
-lambda:
+每个支持的 HTTP 方法的处理程序都在源文件的其他地方定义了，然后使用 `CompositionView.add` 方法添加到视图。第一个参数是一个要处理的 HTTP 方法列表 (e.g. `['GET', 'POST']`)，第二个是处理程序。下面的例子展示了带两个外部处理程序和一个内部匿名函数的 `CompositionView` 的用法：
 
 ```python
 from sanic import Sanic
@@ -163,4 +144,4 @@ view.add(['POST', 'PUT'], lambda request: text('I am a post/put method'))
 app.add_route(view, '/')
 ```
 
-Note: currently you cannot build a URL for a CompositionView using `url_for`.
+注意：当前你不能通过 `url_for` 为 CompositionView 建立 URL。
