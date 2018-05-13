@@ -1,62 +1,49 @@
-# Contributing
+# 贡献
 
-Thank you for your interest! Sanic is always looking for contributors. If you
-don't feel comfortable contributing code, adding docstrings to the source files
-is very appreciated.
+谢谢你的关注！Sanic 一直在寻找贡献这。如果你不习惯贡献代码，那么向源文件中添加文档是非常值得赞赏的。
 
-## Installation
+## 安装
 
-To develop on sanic (and mainly to just run the tests) it is highly recommend to
-install from sources.
+要开发sanic（主要是为了运行测试），强烈建议从源代码安装。
 
-So assume you have already cloned the repo and are in the working directory with
-a virtual environment already set up, then run:
+所以假设你已经克隆了repo，并且已经在已经设置了虚拟环境的工作目录中，然后运行：
 
 ```bash
 python setup.py develop && pip install -r requirements-dev.txt
 ```
 
-## Running tests
+## 运行测试
 
-To run the tests for sanic it is recommended to use tox like so:
+要运行 sanic 的测试，强烈建议使用 tox 如下：
 
 ```bash
 tox
 ```
 
-See it's that simple!
+看就这么简单！
 
 ## Pull requests!
 
-So the pull request approval rules are pretty simple:
-1. All pull requests must pass unit tests
-* All pull requests must be reviewed and approved by at least 
-one current collaborator on the project
-* All pull requests must pass flake8 checks
-* If you decide to remove/change anything from any common interface
-a deprecation message should accompany it.
-* If you implement a new feature you should have at least one unit
-test to accompany it.
+pull request 批准规则非常简单：
+1. 所有 pull requests 必须通过测试
+* 所有 pull requests 必须至少被项目中的一名当前合作者
+* 所有 pull requests 必须通过 flake8 检查
+* 如果你决定从任何公共接口中 删除/修改 任何内容，则应附上该消息。
+* 如果你执行一个新的功能你应该至少有意个单元测试来附上它。
 
-## Documentation
+## 文档
 
-Sanic's documentation is built
-using [sphinx](http://www.sphinx-doc.org/en/1.5.1/). Guides are written in
-Markdown and can be found in the `docs` folder, while the module reference is
-automatically generated using `sphinx-apidoc`.
+Sanic 的文档使用 [sphinx](http://www.sphinx-doc.org/en/1.5.1/) 建立。指南用 Markdown 协程，并且能在 `docs` 目录中找到，这个模块参考由 `sphinx-apidoc` 自动生成。
 
-To generate the documentation from scratch:
+要从头生成文档：
 
 ```bash
 sphinx-apidoc -fo docs/_api/ sanic
 sphinx-build -b html docs docs/_build
 ```
 
-The HTML documentation will be created in the `docs/_build` folder.
+HTML 文档会在 `docs/_build` 目录创建。
 
-## Warning
+## 警告
 
-One of the main goals of Sanic is speed. Code that lowers the performance of
-Sanic without significant gains in usability, security, or features may not be
-merged. Please don't let this intimidate you! If you have any concerns about an
-idea, open an issue for discussion and help.
+Sanic 的主要目标之一是速度。代码可能会降低 Sanic 的性能，但在可用性，安全性或功能方面没有显着提升，可能不会合并。请不要被这吓到！如果您对某个想法有任何疑虑，开个 issue 来讨论和帮助吧。
