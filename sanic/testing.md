@@ -1,11 +1,9 @@
-# Testing
+# 测试
 
-Sanic endpoints can be tested locally using the `test_client` object, which
-depends on the additional [aiohttp](https://aiohttp.readthedocs.io/en/stable/)
-library. 
+Sanic 端可以使用 `test_client` 对象进行本地测试，该对象基于额外的 [aiohttp](https://aiohttp.readthedocs.io/en/stable/)
+库。
 
-The `test_client` exposes `get`, `post`, `put`, `delete`, `patch`, `head` and `options` methods
-for you to run against your application. A simple example (using pytest) is like follows:
+`test_client` 公开 `get`, `post`, `put`, `delete`, `patch`, `head` 和 `options` 方法供你针对你的应用程序运行。一个简单的例子 (using pytest) 如下：
 
 ```python
 # Import the Sanic app, usually created with Sanic(__name__)
@@ -20,22 +18,18 @@ def test_index_put_not_allowed():
     assert response.status == 405
 ```
 
-Internally, each time you call one of the `test_client` methods, the Sanic app is run at `127.0.0.1:42101` and 
-your test request is executed against your application, using `aiohttp`. 
+在内部，每次你调用 `test_client` 方法的任一，Sanic 会在 `127.0.0.1:42101` 执行并且你的测试请求会使用 `aiohttp` 针对你的应用程序进行执行。
 
-The `test_client` methods accept the following arguments and keyword arguments:
+`test_client` 方法接收如下参数和关键字参数：
 
-- `uri` *(default `'/'`)* A string representing the URI to test.
-- `gather_request` *(default `True`)* A boolean which determines whether the
-  original request will be returned by the function. If set to `True`, the
-  return value is a tuple of `(request, response)`, if `False` only the
-  response is returned.
-- `server_kwargs` *(default `{}`) a dict of additional arguments to pass into `app.run` before the test request is run.
-- `debug` *(default `False`)* A boolean which determines whether to run the server in debug mode.
+- `uri` *(默认 `'/'`)* 一个要测试的 URI 字符串。
+- `gather_request` *(默认 `True`)* 一个确定是否被函数返回原始请求的布尔值。如果设置为 `True`，返回值十一个 `(request, response)` 的元组，如果是 `False` 就只返回响应。
+- `server_kwargs` *(默认 `{}`)* 一个在测试请求执行之前传入 `app.run` 的额外参数的字典。
+- `debug` *(默认 `False`)* 一个确定是否在调试模式启动服务的布尔值。
 
-The function further takes the `*request_args` and `**request_kwargs`, which are passed directly to the aiohttp ClientSession request.
+程序进一步采用 `*request_args` 和 `**request_kwargs`，它们直接传递给 aiohttp ClientSession 请求。
 
-For example, to supply data to a GET request, you would do the following:
+例如，要提供数据给一个 GET 请求，你可以操作如下：
 
 ```python
 def test_get_request_includes_data():
@@ -44,7 +38,7 @@ def test_get_request_includes_data():
     assert request.args.get('key1') == 'value1'
 ```
 
-And to supply data to a JSON POST request:
+要提供数据给一个 JSON POST 请求：
 
 ```python
 def test_post_json_request_includes_data():
@@ -54,15 +48,13 @@ def test_post_json_request_includes_data():
 ```
 
 
-More information about
-the available arguments to aiohttp can be found
-[in the documentation for ClientSession](https://aiohttp.readthedocs.io/en/stable/client_reference.html#client-session).
+更多关于 aiohttp 有效参数的信息可以在
+[in the documentation for ClientSession](https://aiohttp.readthedocs.io/en/stable/client_reference.html#client-session) 找到。
 
 
 ## pytest-sanic
 
-[pytest-sanic](https://github.com/yunstanford/pytest-sanic) is a pytest plugin, it helps you to test your code asynchronously.
-Just write tests like,
+[pytest-sanic](https://github.com/yunstanford/pytest-sanic) 十一个 pytest 插件，它帮助你异步地测试你的代码。写法如下：
 
 ```python
 async def test_sanic_db_find_by_id(app):
@@ -79,8 +71,8 @@ async def test_sanic_db_find_by_id(app):
     assert doc.team == "Lakers"
 ```
 
-[pytest-sanic](https://github.com/yunstanford/pytest-sanic) also provides some useful fixtures, like loop, unused_port,
-test_server, test_client.
+[pytest-sanic](https://github.com/yunstanford/pytest-sanic) 还提供了一些有用的装置，如 loop, unused_port,
+test_server, test_client。
 
 ```python
 @pytest.yield_fixture
