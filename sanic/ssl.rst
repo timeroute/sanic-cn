@@ -1,7 +1,7 @@
-SSL Example
+SSL 例子
 -----------
 
-Optionally pass in an SSLContext:
+可以传入 SSLContext:
 
 .. code:: python
 
@@ -11,7 +11,7 @@ Optionally pass in an SSLContext:
 
   app.run(host="0.0.0.0", port=8443, ssl=context)
 
-You can also pass in the locations of a certificate and key as a dictionary:
+你也可以用字典传入一个证书和密钥的位置：
 
 
 .. code:: python
