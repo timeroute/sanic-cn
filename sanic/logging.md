@@ -1,11 +1,11 @@
-# Logging
+# 日志
 
 
-Sanic allows you to do different types of logging (access log, error log) on the requests based on the [python3 logging API](https://docs.python.org/3/howto/logging.html). You should have some basic knowledge on python3 logging if you want to create a new configuration.
+Sanic 允许你在基于 [python3 logging API](https://docs.python.org/3/howto/logging.html) 的请求上做不同类型的日志 (access log, error log)。如果你想创建一个新的配置，你应该了解 python3 日志模块的基本知识。
 
-### Quick Start
+### 快速开始
 
-A simple example using default settings would be like this:
+一个使用默认设置的简单例子如下：
 
 ```python
 from sanic import Sanic
@@ -20,22 +20,20 @@ if __name__ == "__main__":
   app.run(debug=True, access_log=True)
 ```
 
-To use your own logging config, simply use `logging.config.dictConfig`, or
-pass `log_config` when you initialize `Sanic` app:
+要使用你自己的日志配置，简单使用 `logging.config.dictConfig`，或者在你初始化 `Sanic` 应用的时候传递 `log_config`：
 
 ```python
 app = Sanic('test', log_config=LOGGING_CONFIG)
 ```
 
-And to close logging, simply assign access_log=False:
+要关闭日志，只需指定 access_log=False:
 
 ```python
 if __name__ == "__main__":
   app.run(access_log=False)
 ```
 
-This would skip calling logging functions when handling requests.
-And you could even do further in production to gain extra speed:
+这会在处理请求时跳过调用日志记录程序。并且你甚至可以在生产中进一步提高速度：
 
 ```python
 if __name__ == "__main__":
@@ -43,25 +41,24 @@ if __name__ == "__main__":
   app.run(debug=False, access_log=False)
 ```
 
-### Configuration
+### 配置
 
-By default, log_config parameter is set to use sanic.log.LOGGING_CONFIG_DEFAULTS dictionary for configuration.
+默认情况下，log_config 参数设置为使用 sanic.log.LOGGING_CONFIG_DEFAULTS 字典进行配置。
 
-There are three `loggers` used in sanic, and **must be defined if you want to create your own logging configuration**:
+sanic 使用了三种 `loggers`，并且 **当你想要创建你自己的日志配置时必须被定义**:
 
 - root:<br>
-  Used to log internal messages.
+  用来记录内部消息。
 
 - sanic.error:<br>
-  Used to log error logs.
+  用来记录错误日志。
 
 - sanic.access:<br>
-  Used to log access logs.
+  用来记录访问日志。
 
-#### Log format:
+#### 日志格式化：
 
-In addition to default parameters provided by python (asctime, levelname, message),
-Sanic provides additional parameters for access logger with:
+除了 python 提供的默认参数 (asctime, levelname, message) 外，Sanic 提供了额外的参数给访问日志：
 
 - host (str)<br>
   request.ip
@@ -79,7 +76,8 @@ Sanic provides additional parameters for access logger with:
   len(response.body)
 
 
-The default access log format is 
+默认的访问日志格式如下：
+
 ```python
 %(asctime)s - (%(name)s)[%(levelname)s][%(host)s]: %(request)s %(message)s %(status)d %(byte)d
 ```
